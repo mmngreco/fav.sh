@@ -10,11 +10,11 @@
  *   sidebarContent: node:null
  *   rootContent: node:null
  */
-import React from 'react'
+import React, { ReactNode } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import Sidebar from 'components/Sidebar'
 import { IconButton } from 'components/common/Button'
 import Notification from 'components/common/Notification'
@@ -27,6 +27,16 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import ArrowBack from '@material-ui/icons/ArrowBack'
 
+type Props = {
+  basicHeader: boolean
+  headerName: string
+  headerLeftComponents: ReactNode
+  headerRightComponents: ReactNode
+  sidebarContent: ReactNode
+  rootContent: ReactNode
+  toggleSidebar: () => void
+}
+
 export const BackButton = () => (
   <IconButton
     label="Go Back"
@@ -36,20 +46,21 @@ export const BackButton = () => (
   />
 )
 
-function RootShell({
-  basicHeader,
-  headerName,
-  headerLeftComponents,
-  headerRightComponents,
-  sidebarContent,
-  rootContent,
-  toggleSidebar,
-}) {
+export default (props: Props) => {
+  const dispatch = useDispatch()
+  const {
+    sidebarContent,
+    headerName,
+    headerLeftComponents,
+    headerRightComponents,
+    basicHeader,
+    rootContent,
+  } = props
   const SidebarButton = () => (
     <IconButton
       aria-label="Sidebar"
       icon={<MenuIcon />}
-      onClick={toggleSidebar}
+      onClick={() => dispatch(toggleSidebar)}
     />
   )
 
@@ -101,37 +112,6 @@ function RootShell({
     </AppContainer>
   )
 }
-
-RootShell.propTypes = {
-  /* Props if using a simple header */
-  basicHeader: PropTypes.bool,
-  headerName: PropTypes.string,
-
-  /* General Props */
-  headerLeftComponents: PropTypes.node,
-  headerRightComponents: PropTypes.node,
-  sidebarContent: PropTypes.node,
-  rootContent: PropTypes.node,
-  toggleSidebar: PropTypes.func.isRequired,
-}
-
-RootShell.defaultProps = {
-  basicHeader: false,
-  headerName: null,
-  headerLeftComponents: null,
-  headerRightComponents: null,
-  sidebarContent: null,
-  rootContent: null,
-}
-
-const mapDispatchToProps = {
-  toggleSidebar,
-}
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(RootShell)
 
 /**
  * Styled Components

@@ -11,7 +11,7 @@ import AddPage from 'containers/AddPage'
 import EditPage from 'containers/EditPage'
 import SyncPage from 'containers/SyncPage'
 
-export default function Router() {
+export default () => {
   return (
     <BrowserRouter>
       <Switch>
