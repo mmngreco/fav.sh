@@ -5,10 +5,9 @@ import GithubLoginButton from 'components/SyncPage/GithubLoginButton'
 
 const HeaderLeft = () => <GithubLoginButton />
 
-function SyncPage() {
+export default () => {
   return (
     <RootShell
-      withBackButton
       headerName="Backup and Sync"
       headerLeftComponents={<HeaderLeft />}
       headerRightComponents={<BackButton />}
@@ -16,4 +15,3 @@ function SyncPage() {
     />
   )
 }
-export default SyncPage

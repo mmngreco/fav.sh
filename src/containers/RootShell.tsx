@@ -14,7 +14,7 @@ import React, { ReactNode } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { connect, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import Sidebar from 'components/Sidebar'
 import { IconButton } from 'components/common/Button'
 import Notification from 'components/common/Notification'
@@ -28,13 +28,13 @@ import Typography from '@material-ui/core/Typography'
 import ArrowBack from '@material-ui/icons/ArrowBack'
 
 type Props = {
-  basicHeader: boolean
-  headerName: string
-  headerLeftComponents: ReactNode
-  headerRightComponents: ReactNode
-  sidebarContent: ReactNode
-  rootContent: ReactNode
-  toggleSidebar: () => void
+  basicHeader?: boolean
+  headerName?: string
+  headerLeftComponents?: ReactNode
+  headerRightComponents?: ReactNode
+  sidebarContent?: ReactNode
+  rootContent?: ReactNode
+  toggleSidebar?: () => void
 }
 
 export const BackButton = () => (
@@ -47,7 +47,6 @@ export const BackButton = () => (
 )
 
 export default (props: Props) => {
-  const dispatch = useDispatch()
   const {
     sidebarContent,
     headerName,
@@ -60,7 +59,7 @@ export default (props: Props) => {
     <IconButton
       aria-label="Sidebar"
       icon={<MenuIcon />}
-      onClick={() => dispatch(toggleSidebar)}
+      onClick={props.toggleSidebar}
     />
   )
 
@@ -112,10 +111,6 @@ export default (props: Props) => {
     </AppContainer>
   )
 }
-
-/**
- * Styled Components
- */
 
 const AppToolbar = styled(Toolbar)`
   display: flex !important;
