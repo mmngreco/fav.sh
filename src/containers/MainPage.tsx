@@ -1,9 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { toggleSidebar } from 'store/modules/ui'
 import { startDraft } from 'store/modules/draft'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import RootShell from './RootShell'
 import Button, {
@@ -18,26 +17,20 @@ import Add from '@material-ui/icons/Add'
 
 import HeaderSearch from 'components/HeaderSearch'
 
-function MainPage({ toggleSidebar, startDraft }) {
-  /** Left Header Buttons:
-   *  Sidebar
-   */
+export default () => {
+  const dispatch = useDispatch()
+
   const HeaderLeft = () => (
     <>
       <IconButton
         aria-label="Sidebar"
         icon={<MenuIcon />}
-        onClick={toggleSidebar}
+        onClick={() => dispatch(toggleSidebar)}
       />
       <HeaderSearch />
     </>
   )
 
-  /** Right Header Buttons:
-   *  Save Bookmarks (if sync is on)
-   *  Add a bookmark
-   *  Open Sync Window
-   */
   const HeaderRight = () => (
     <>
       <IconButton
@@ -46,7 +39,7 @@ function MainPage({ toggleSidebar, startDraft }) {
         icon={<Add fontSize="small" />}
         to="/add"
         component={Link}
-        onClick={startDraft}
+        onClick={() => dispatch(startDraft)}
       />
       <StyledButton component={Link} to="/sync">
         Sync
@@ -63,21 +56,6 @@ function MainPage({ toggleSidebar, startDraft }) {
     />
   )
 }
-
-MainPage.propTypes = {
-  toggleSidebar: PropTypes.func.isRequired,
-  startDraft: PropTypes.func.isRequired,
-}
-
-const mapDispatchToProps = {
-  toggleSidebar,
-  startDraft,
-}
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(MainPage)
 
 const StyledButton = styled(Button)`
   color: #fff !important;
